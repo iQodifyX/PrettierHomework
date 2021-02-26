@@ -1,0 +1,26 @@
+.background{
+    background-color: blue;
+    width: 200px;
+    border-radius: 10px;
+    border: solid black;
+    height: 250px;
+}
+
+.title{
+    height: 50px;
+    background-color: white;
+    border-radius: 50px;
+    position: relative;
+    top: 30px;
+    border: solid tomato;
+    z-index: 10000;
+    text-align: center;
+}
+
+.content{
+    padding-top: 20px;
+    background-color: #ffffff;
+    position: relative;
+    top: 0px;
+    border-radius: 0 0 10px 10px;
+}
