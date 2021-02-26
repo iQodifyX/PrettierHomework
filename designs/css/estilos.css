@@ -1,26 +1,48 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.card{
+    width: 300px;
+    border-radius: 10px;
+}
+
 .background{
     background-color: blue;
-    width: 200px;
     border-radius: 10px;
-    border: solid black;
-    height: 250px;
+    height: auto;
 }
 
 .title{
-    height: 50px;
-    background-color: white;
+    color: white;
+    background-color: rgb(31, 30, 30);
     border-radius: 50px;
     position: relative;
     top: 30px;
-    border: solid tomato;
+    border: 2px solid white;
     z-index: 10000;
     text-align: center;
 }
 
 .content{
-    padding-top: 20px;
-    background-color: #ffffff;
-    position: relative;
-    top: 0px;
+    color: white;
+    padding: 20px 20px 15px 20px;
+    background-color: rgb(31, 30, 30);
+    text-align: justify;
     border-radius: 0 0 10px 10px;
+}
+
+.button{
+    background-color: rgb(31, 30, 30);
+    border: 1px solid white;
+    display: block;
+    position: relative;
+    bottom: 25px;
+    width: 15px;
+    padding: 15px;
+    border-radius: 50px;
+    margin: auto;
+    text-decoration: none;
+    color: white;
+    text-align: center;
 }
