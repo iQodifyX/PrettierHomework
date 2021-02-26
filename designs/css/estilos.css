@@ -2,6 +2,12 @@ body{
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-left: 100px;
+}
+
 /* COLORS  */
 
 .matematicas{
@@ -9,23 +15,23 @@ body{
 }
 
 .fisica{
-    background-color: blueviolet;
+    background-color: rgb(55, 232, 255);
 }
 
 .biologia{
-    background-color: green;
+    background-color: rgb(24, 148, 24);
 }
 
 .historia{
-    background-color: yellow;
+    background-color: rgb(248, 225, 14);
 }
 
 .sistemas{
-    background-color: salmon;
+    background-color: rgb(227, 114, 250);
 }
 
 .aplicaciones{
-    background-color: springgreen;
+    background-color: rgb(43, 255, 174);
 }
 
 .literatura{
@@ -33,15 +39,15 @@ body{
 }
 
 .ingles{
-    background-color: purple;
+    background-color: rgb(158, 55, 255);
 }
 
 .orientacion{
-    background-color: red;
+    background-color: rgb(216, 0, 0);
 }
 
 .religion{
-    background-color: tomato;
+    background-color: rgb(255, 152, 133);
 }
 
 /* CARD */
