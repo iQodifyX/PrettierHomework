@@ -3,7 +3,7 @@ import { SignOut } from "./Auth";
 import Card from "./Card";
 
 const TestData = {
-  color: "green",
+  color: "red",
   asignature: "Matemáticas",
   activity: "Lorem Ipsum",
   content:

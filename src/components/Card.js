@@ -2,7 +2,7 @@ const Card = (props) => {
   const { color, asignature, activity, content } = props.data;
   return (
     <div class="card">
-      <div class={color}>
+      <div class={`background ${color}`}>
         <div class="title">
           <h2>{asignature}</h2>
         </div>

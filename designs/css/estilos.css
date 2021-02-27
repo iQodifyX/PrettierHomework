@@ -1,102 +1,102 @@
-body{
-    font-family: Arial, Helvetica, sans-serif;
+body {
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.grid{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    margin-left: 100px;
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-left: 100px;
 }
 
 /* COLORS  */
 
-.matematicas{
-    background-color: rgb(28, 88, 255);
+.blue {
+  background-color: rgb(28, 88, 255);
 }
 
-.fisica{
-    background-color: rgb(55, 232, 255);
+.light-blue {
+  background-color: rgb(55, 232, 255);
 }
 
-.biologia{
-    background-color: rgb(24, 148, 24);
+.green {
+  background-color: rgb(24, 148, 24);
 }
 
-.historia{
-    background-color: rgb(248, 225, 14);
+.yellow {
+  background-color: rgb(248, 225, 14);
 }
 
-.sistemas{
-    background-color: rgb(227, 114, 250);
+.pink {
+  background-color: rgb(227, 114, 250);
 }
 
-.aplicaciones{
-    background-color: rgb(43, 255, 174);
+.turquoise {
+  background-color: rgb(43, 255, 174);
 }
 
-.literatura{
-    background-color: orange;
+.orange {
+  background-color: orange;
 }
 
-.ingles{
-    background-color: rgb(158, 55, 255);
+.purple {
+  background-color: rgb(158, 55, 255);
 }
 
-.orientacion{
-    background-color: rgb(216, 0, 0);
+.red {
+  background-color: rgb(216, 0, 0);
 }
 
-.religion{
-    background-color: rgb(255, 152, 133);
+.peach {
+  background-color: rgb(255, 152, 133);
 }
 
 /* CARD */
 
-.card{
-    width: 300px;
+.card {
+  width: 300px;
 }
 
-.background{
-    border-radius: 0px 0px 20px 20px;
-    height: auto;
-    border: 2px solid black;
-    box-shadow: 4px 4px 5px grey;
+.background {
+  border-radius: 0px 0px 20px 20px;
+  height: auto;
+  border: 2px solid black;
+  box-shadow: 4px 4px 5px grey;
 }
 
-.title{
-    background-color: white;
-    border-radius: 50px;
-    position: relative;
-    top: 25px;
-    border: 2px solid black;
-    text-align: center;
-    max-height: 40px;
-    width: 200px;
-    margin: auto;
+.title {
+  background-color: white;
+  border-radius: 50px;
+  position: relative;
+  top: 25px;
+  border: 2px solid black;
+  text-align: center;
+  max-height: 40px;
+  width: 200px;
+  margin: auto;
 }
 
-.title h2{
-    position: relative;
-    bottom: 15px;
+.title h2 {
+  position: relative;
+  bottom: 15px;
 }
 
-.content{
-    padding: 20px 20px 15px 20px;
-    background-color: white;
-    text-align: justify;
-    border-radius: 0px 0px 20px 20px;
+.content {
+  padding: 20px 20px 15px 20px;
+  background-color: white;
+  text-align: justify;
+  border-radius: 0px 0px 20px 20px;
 }
 
-.button{
-    background-color: white;
-    border: 2px solid black;
-    display:block;
-    position: relative;
-    bottom: 25px;
-    width: 25px;
-    padding: 15px 15px 15px 16px;
-    border-radius: 50px;
-    margin: auto;
-    color: black;
-    box-shadow: 2px 2px 5px grey;
+.button {
+  background-color: white;
+  border: 2px solid black;
+  display: block;
+  position: relative;
+  bottom: 25px;
+  width: 25px;
+  padding: 15px 15px 15px 16px;
+  border-radius: 50px;
+  margin: auto;
+  color: black;
+  box-shadow: 2px 2px 5px grey;
 }
