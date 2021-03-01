@@ -1,24 +1,19 @@
-import { auth } from "../App";
-import { SignOut } from "./Auth";
-import Card from "./Card";
-
-const TestData = {
-  color: "red",
-  asignature: "Matemáticas",
-  activity: "Lorem Ipsum",
-  content:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos tempore et consectetur quas ipsum velit, laboriosam hic corrupti cupiditate ullam.",
-};
+import { Container, Typography } from "@material-ui/core";
+import { Nav } from "./Nav";
 
 const Main = () => {
-  const { displayName, photoURL } = auth.currentUser;
+  //const classes = useStyles();
 
   return (
     <div>
-      <h1>Welcome back, {displayName}</h1>
-      <img src={photoURL} alt="" />
-      <SignOut />
-      <Card data={TestData} />
+      <Nav />
+      <section>
+        <Container maxWidth="xl">
+          <Typography color="textPrimary" variant="h2" align="center">
+            Events
+          </Typography>
+        </Container>
+      </section>
     </div>
   );
 };
