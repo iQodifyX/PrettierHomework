@@ -1,10 +1,4 @@
-import {
-  AppBar,
-  Avatar,
-  CssBaseline,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
+import { AppBar, Avatar, Toolbar, Typography } from "@material-ui/core";
 import { Event } from "@material-ui/icons";
 import { auth } from "../App";
 import { useStyles } from "../styles/styles";
@@ -16,7 +10,6 @@ const Nav = () => {
 
   return (
     <div>
-      <CssBaseline />
       <AppBar className={classes.nav} position="relative">
         <Toolbar>
           <Event />
