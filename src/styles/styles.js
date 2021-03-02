@@ -23,18 +23,39 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "15px",
   },
   cardGrid: {
-    padding: "20px",
+    padding: "15px",
   },
   card: {
     height: "100%",
     display: "flex",
     flexDirection: "column",
   },
+  doneCard: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    opacity: 0.8,
+  },
   cardMedia: {
     paddingTop: "10px",
   },
   cardContent: {
     flexGrow: 1,
+  },
+  image: {
+    height: "200px",
+  },
+  mockEvent: {
+    marginTop: "30px",
+    marginLeft: "10px",
+    marginRight: "10px",
+  },
+  labels: {
+    padding: "3px 9px 3px 9px",
+    margin: "0px 10px 10px 0px",
+    backgroundColor: "#ededed",
+    borderRadius: "1rem",
+    border: "1px solid black",
   },
 }));
 

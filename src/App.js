@@ -7,6 +7,7 @@ import "firebase/analytics";
 import { SignIn } from "./components/Auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Main } from "./components/Main";
+import { ConfirmProvider } from "material-ui-confirm";
 
 firebase.initializeApp({
   apiKey: "AIzaSyC8I4hJR1hIZi-Ec_diOQA7CRLiSRWtekk",
@@ -26,11 +27,13 @@ const App = () => {
   const [user] = useAuthState(auth);
 
   return (
-    <div className="App">
-      <section>{user ? <Main /> : <SignIn />}</section>
-    </div>
+    <>
+      <ConfirmProvider>
+        <section>{user ? <Main /> : <SignIn />}</section>
+      </ConfirmProvider>
+    </>
   );
 };
 
-export { firebase, auth, firestore };
+export { firebase, auth, firestore, analytics };
 export default App;
