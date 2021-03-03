@@ -11,13 +11,22 @@ import {
 } from "@material-ui/core";
 
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { useConfirm } from "material-ui-confirm";
 
 const SignOut = () => {
+  const confirm = useConfirm();
   return (
     <div>
       <Button
         style={{ height: "40px" }}
-        onClick={() => auth.signOut()}
+        onClick={() =>
+          confirm({
+            title: "Log Out",
+            description: "Are you sure that you want to log out?",
+          })
+            .then(() => auth.signOut())
+            .catch(() => undefined)
+        }
         variant="contained"
       >
         Log Out

@@ -3,14 +3,13 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
   Container,
   Grid,
   Typography,
 } from "@material-ui/core";
 import { useStyles } from "../styles/styles";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { firestore, auth, firebase } from "../App";
+import { firestore, auth } from "../App";
 import { useConfirm } from "material-ui-confirm";
 import { useState } from "react";
 
@@ -18,16 +17,7 @@ const OneCard = (props) => {
   const { uid } = auth.currentUser;
   const classes = useStyles();
   const confirm = useConfirm();
-  const {
-    title,
-    description,
-    url,
-    state,
-    id,
-    color,
-    image,
-    label,
-  } = props.event;
+  const { title, description, url, state, id, color, label } = props.event;
 
   const updateState = () => {
     const newState = state ? false : true;
@@ -57,7 +47,7 @@ const OneCard = (props) => {
 
   const tryUrl = () => {
     confirm({
-      description: `This will link will take you to an external webpage`,
+      description: `This link will take you to an external webpage`,
       confirmationButtonProps: {
         href: url,
         target: "_blank",
@@ -71,9 +61,6 @@ const OneCard = (props) => {
     <>
       <Grid item xs={12} sm={6} md={4} lg={4}>
         <Card className={classes.card}>
-          {image ? (
-            <CardMedia image={image} className={classes.image} />
-          ) : undefined}
           <div
             component=""
             className={classes.cardMedia}
@@ -132,35 +119,21 @@ const OneCard = (props) => {
 const Cards = () => {
   const { uid } = auth.currentUser;
   const classes = useStyles();
-  let [limit, setLimit] = useState(6);
+  let [limit1, setLimit1] = useState(6);
+  let [limit2, setLimit2] = useState(6);
 
   const undoneQuery = firestore
     .collection("users")
     .doc(uid)
     .collection("events")
-    .where("state", "==", true);
+    .where("state", "==", true)
+    .limit(limit1);
   const doneQuery = firestore
     .collection("users")
     .doc(uid)
     .collection("events")
     .where("state", "==", false)
-    .limit(limit);
-
-  const mockEvent = () => {
-    firestore
-      .collection("users")
-      .doc(uid)
-      .collection("events")
-      .add({
-        title: "Test event",
-        description: "This is a mock event made for testing purposes",
-        state: true,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        url: "https://firebase.google.com/docs/firestore/",
-        color: "black",
-        label: ["test", "math"],
-      });
-  };
+    .limit(limit2);
 
   const [undoneEvents] = useCollectionData(undoneQuery, { idField: "id" });
   const [doneEvents] = useCollectionData(doneQuery, { idField: "id" });
@@ -173,6 +146,7 @@ const Cards = () => {
           variant="h2"
           align="center"
           className={classes.title}
+          gutterBottom
         >
           Tasks
         </Typography>
@@ -182,12 +156,25 @@ const Cards = () => {
               <OneCard key={event.id} event={event} />
             ))}
         </Grid>
+        <div className={classes.buttonGroup}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() =>
+              setLimit1(limit1 === 6 ? (limit1 = 10000) : (limit1 = 6))
+            }
+            className={classes.button}
+          >
+            {limit1 === 6 ? "Show all" : "Show less"}
+          </Button>
+        </div>
       </Container>
       <Typography
         color="textPrimary"
         variant="h2"
         align="center"
         className={classes.title}
+        gutterBottom
       >
         Done
       </Typography>
@@ -196,24 +183,16 @@ const Cards = () => {
           {doneEvents &&
             doneEvents.map((event) => <OneCard key={event.id} event={event} />)}
         </Grid>
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={mockEvent}
-            className={classes.mockEvent}
-          >
-            New event
-          </Button>
+        <div className={classes.buttonGroup}>
           <Button
             variant="contained"
             color="primary"
             onClick={() =>
-              setLimit(limit === 6 ? (limit = 10000) : (limit = 6))
+              setLimit2(limit2 === 6 ? (limit2 = 10000) : (limit2 = 6))
             }
             className={classes.mockEvent}
           >
-            {limit === 6 ? "Show all" : "Show less"}
+            {limit2 === 6 ? "Show all" : "Show less"}
           </Button>
         </div>
       </Container>

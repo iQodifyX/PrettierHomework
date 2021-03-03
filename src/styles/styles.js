@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   title: {
-    padding: "20px",
+    paddingTop: "20px",
   },
   userSection: {
     display: "flex",
@@ -43,12 +43,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   image: {
-    height: "200px",
-  },
-  mockEvent: {
-    marginTop: "30px",
-    marginLeft: "10px",
-    marginRight: "10px",
+    height: "100px",
   },
   labels: {
     padding: "3px 9px 3px 9px",
@@ -56,6 +51,21 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#ededed",
     borderRadius: "1rem",
     border: "1px solid black",
+  },
+  buttonGroup: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "20px",
+  },
+  button: {
+    marginLeft: "5px",
+    marginRight: "5px",
+  },
+  buttonDiv: {
+    position: "fixed",
+    bottom: "3%",
+    right: "3%",
   },
 }));
 
