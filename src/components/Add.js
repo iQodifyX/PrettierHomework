@@ -23,6 +23,7 @@ const AddEvent = () => {
   let [description, setDescription] = useState("");
   let [url, setUrl] = useState("");
   let [color, setColor] = useState("crimson");
+  let [label, setLabel] = useState("");
   const confirm = useConfirm();
   const theme = useTheme();
   const classes = useStyles();
@@ -43,6 +44,7 @@ const AddEvent = () => {
     setTitle("");
     setDescription("");
     setUrl("");
+    setLabel("");
     setColor("Crimson");
   };
 
@@ -58,7 +60,10 @@ const AddEvent = () => {
       color: color,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       state: true,
+      label: label,
     };
+
+    //console.log(data) // output debug
 
     const upload = (data) => {
       firestore.collection("users").doc(uid).collection("events").add(data);
@@ -84,6 +89,7 @@ const AddEvent = () => {
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >
+        <div style={{ backgroundColor: color, height: "10px" }}></div>
         <DialogTitle id="responsive-dialog-title">
           {"Create a task"}
         </DialogTitle>
@@ -113,6 +119,13 @@ const AddEvent = () => {
             id="url"
             label="Url"
             onChange={(e) => setUrl(e.target.value)}
+            fullWidth
+          />
+          <TextField
+            margin="normal"
+            id="label"
+            label="Label"
+            onChange={(e) => setLabel(e.target.value)}
             fullWidth
           />
           <div style={{ paddingTop: "20px" }}>

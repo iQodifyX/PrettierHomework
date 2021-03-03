@@ -12,12 +12,18 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { firestore, auth } from "../App";
 import { useConfirm } from "material-ui-confirm";
 import { useState } from "react";
+import { EditMenu } from "./Edit";
+import DoneIcon from "@material-ui/icons/Done";
+import RestoreIcon from "@material-ui/icons/Restore";
+import LinkIcon from "@material-ui/icons/Link";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
 const OneCard = (props) => {
   const { uid } = auth.currentUser;
   const classes = useStyles();
   const confirm = useConfirm();
   const { title, description, url, state, id, color, label } = props.event;
+  const done = props.done;
 
   const updateState = () => {
     const newState = state ? false : true;
@@ -59,59 +65,50 @@ const OneCard = (props) => {
 
   return (
     <>
-      <Grid item xs={12} sm={6} md={4} lg={4}>
-        <Card className={classes.card}>
-          <div
-            component=""
-            className={classes.cardMedia}
-            style={{ backgroundColor: color ? color : "crimson" }}
-          />
+      {done === true && state === false ? undefined : (
+        <Grid item xs={12} sm={6} md={4} lg={4}>
+          <Card className={state ? classes.card : classes.cardDone}>
+            <div
+              component=""
+              className={classes.cardMedia}
+              style={{ backgroundColor: color ? color : "crimson" }}
+            />
 
-          <CardContent className={classes.cardContent}>
-            <Typography variant="h5" component="h2" gutterBottom>
-              {title}
-            </Typography>
-            <div style={{ display: "flex", margin: "0px" }}>
-              {label
-                ? label.map((name) => (
-                    <Typography
-                      variant="body2"
-                      key={`${name}-${id}`}
-                      className={classes.labels}
-                    >
-                      {name}
-                    </Typography>
-                  ))
-                : undefined}
-            </div>
-            <Typography>{description}</Typography>
-          </CardContent>
-          <CardActions>
-            {url ? (
-              <>
+            <CardContent className={classes.cardContent}>
+              <Typography variant="h5" component="h2" gutterBottom>
+                {title}
+              </Typography>
+              <div style={{ display: "flex", margin: "0px" }}>
+                {label ? (
+                  <Typography variant="body2" className={classes.labels}>
+                    {label}
+                  </Typography>
+                ) : undefined}
+              </div>
+              <Typography>{description}</Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small" color="primary" onClick={updateState}>
+                {state ? <DoneIcon /> : <RestoreIcon />}
+              </Button>
+              <EditMenu edit={props.event} />
+              {url ? (
                 <Button
                   size="small"
                   color="primary"
                   target="_blank"
                   onClick={tryUrl}
                 >
-                  View
+                  <LinkIcon />
                 </Button>
-                <Button size="small" color="primary" onClick={updateState}>
-                  {state ? "Done" : "Mark undone"}
-                </Button>
-              </>
-            ) : (
-              <Button size="small" color="primary" onClick={updateState}>
-                {state ? "Done" : "Mark undone"}
+              ) : undefined}
+              <Button size="small" color="primary" onClick={tryDelete}>
+                <DeleteOutlineIcon />
               </Button>
-            )}
-            <Button size="small" color="primary" onClick={tryDelete}>
-              Delete
-            </Button>
-          </CardActions>
-        </Card>
-      </Grid>
+            </CardActions>
+          </Card>
+        </Grid>
+      )}
     </>
   );
 };
@@ -119,24 +116,17 @@ const OneCard = (props) => {
 const Cards = () => {
   const { uid } = auth.currentUser;
   const classes = useStyles();
-  let [limit1, setLimit1] = useState(6);
-  let [limit2, setLimit2] = useState(6);
+  let [limit, setLimit] = useState(9);
+  let [done, setDone] = useState(false);
 
   const undoneQuery = firestore
     .collection("users")
     .doc(uid)
     .collection("events")
-    .where("state", "==", true)
-    .limit(limit1);
-  const doneQuery = firestore
-    .collection("users")
-    .doc(uid)
-    .collection("events")
-    .where("state", "==", false)
-    .limit(limit2);
+    .orderBy("timestamp", "desc")
+    .limit(limit);
 
   const [undoneEvents] = useCollectionData(undoneQuery, { idField: "id" });
-  const [doneEvents] = useCollectionData(doneQuery, { idField: "id" });
 
   return (
     <>
@@ -153,7 +143,7 @@ const Cards = () => {
         <Grid container spacing={4}>
           {undoneEvents &&
             undoneEvents.map((event) => (
-              <OneCard key={event.id} event={event} />
+              <OneCard key={event.id} event={event} done={done} />
             ))}
         </Grid>
         <div className={classes.buttonGroup}>
@@ -161,38 +151,19 @@ const Cards = () => {
             variant="contained"
             color="primary"
             onClick={() =>
-              setLimit1(limit1 === 6 ? (limit1 = 10000) : (limit1 = 6))
+              setLimit(limit === 9 ? (limit = 10000) : (limit = 9))
             }
             className={classes.button}
           >
-            {limit1 === 6 ? "Show all" : "Show less"}
+            {limit === 9 ? "More" : "Less"}
           </Button>
-        </div>
-      </Container>
-      <Typography
-        color="textPrimary"
-        variant="h2"
-        align="center"
-        className={classes.title}
-        gutterBottom
-      >
-        Done
-      </Typography>
-      <Container className={classes.cardGrid} maxWidth="lg">
-        <Grid container spacing={4}>
-          {doneEvents &&
-            doneEvents.map((event) => <OneCard key={event.id} event={event} />)}
-        </Grid>
-        <div className={classes.buttonGroup}>
           <Button
             variant="contained"
             color="primary"
-            onClick={() =>
-              setLimit2(limit2 === 6 ? (limit2 = 10000) : (limit2 = 6))
-            }
-            className={classes.mockEvent}
+            onClick={() => setDone(done ? false : true)}
+            className={classes.button}
           >
-            {limit2 === 6 ? "Show all" : "Show less"}
+            {done ? <RestoreIcon /> : <DoneIcon />}
           </Button>
         </div>
       </Container>

@@ -30,6 +30,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
+  cardDone: {
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    opacity: 0.5,
+  },
   doneCard: {
     height: "100%",
     display: "flex",
