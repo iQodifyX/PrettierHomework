@@ -1,4 +1,5 @@
 import { Container, CssBaseline, Grid } from "@material-ui/core";
+import { Copyright } from "./Copyright";
 import { auth, firestore } from "../App";
 import { useStyles } from "../styles/styles";
 import { AddEvent } from "./Add";
@@ -27,6 +28,9 @@ const Main = () => {
           <AddEvent className={classes.addButton} />
         </Grid>
       </main>
+      <div style={{ marginTop: "50px", paddingBottom: "50px" }}>
+        <Copyright />
+      </div>
     </div>
   );
 };

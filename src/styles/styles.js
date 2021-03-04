@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: "20px",
+    marginTop: "50px",
   },
   button: {
     marginLeft: "5px",

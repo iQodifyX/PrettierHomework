@@ -80,7 +80,12 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  copyright: {},
+  grid: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "center",
+  },
 }));
 
 const SignIn = () => {
@@ -94,7 +99,16 @@ const SignIn = () => {
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid
+        item
+        xs={12}
+        sm={8}
+        md={5}
+        component={Paper}
+        elevation={6}
+        square
+        className={classes.grid}
+      >
         <div className={classes.paper}>
           <Typography variant="h3" gutterBottom>
             Prettier Homework

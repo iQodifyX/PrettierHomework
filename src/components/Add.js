@@ -124,7 +124,7 @@ const AddEvent = () => {
           <TextField
             margin="normal"
             id="label"
-            label="Label"
+            label="Asignature"
             onChange={(e) => setLabel(e.target.value)}
             fullWidth
           />
@@ -139,10 +139,20 @@ const AddEvent = () => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
+          <Button
+            autoFocus
+            onClick={handleClose}
+            color="primary"
+            style={{ marginBottom: "20px" }}
+          >
             Cancel
           </Button>
-          <Button onClick={submit} color="primary" autoFocus>
+          <Button
+            onClick={submit}
+            color="primary"
+            style={{ marginBottom: "20px" }}
+            autoFocus
+          >
             Submit
           </Button>
         </DialogActions>

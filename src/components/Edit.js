@@ -121,7 +121,7 @@ const EditMenu = (props) => {
           <TextField
             margin="normal"
             id="label"
-            label="Label"
+            label="Asignature"
             value={newLabel}
             onChange={(e) => setNewLabel(e.target.value)}
             fullWidth
@@ -137,10 +137,18 @@ const EditMenu = (props) => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button
+            onClick={handleClose}
+            color="primary"
+            style={{ marginBottom: "20px" }}
+          >
             Cancel
           </Button>
-          <Button onClick={submit} color="primary">
+          <Button
+            onClick={submit}
+            color="primary"
+            style={{ marginBottom: "20px" }}
+          >
             Submit
           </Button>
         </DialogActions>
