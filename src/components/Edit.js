@@ -15,15 +15,18 @@ import { useConfirm } from "material-ui-confirm";
 import { useState } from "react";
 import { auth, firestore } from "../App";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const EditMenu = (props) => {
   const { uid } = auth.currentUser;
-  const { title, description, url, label, color, id } = props.edit;
+  const { title, description, url, label, color, id, date } = props.edit;
   const [newTitle, setNewTitle] = useState(title ? title : "");
   const [newDesc, setNewDesc] = useState(description ? description : "");
   const [newUrl, setNewUrl] = useState(url ? url : "");
   const [newLabel, setNewLabel] = useState(label ? label : "");
   const [newColor, setNewColor] = useState(color ? color : "Crimson");
+  const [newDate, setNewDate] = useState(date ? new Date(date) : new Date());
   const theme = useTheme();
   const confirm = useConfirm();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -31,15 +34,16 @@ const EditMenu = (props) => {
 
   const handleClickOpen = () => {
     setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
     setNewTitle(title ? title : "");
     setNewDesc(description ? description : "");
     setNewUrl(url ? url : "");
     setNewColor(color ? color : "");
     setNewLabel(label ? label : "");
+    setNewDate(date ? new Date(date) : new Date());
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const failSubmit = () => {
@@ -60,6 +64,7 @@ const EditMenu = (props) => {
       url: newUrl,
       color: newColor,
       label: newLabel,
+      date: newDate.getTime(),
     };
 
     const upload = () => {
@@ -71,7 +76,7 @@ const EditMenu = (props) => {
         .set(data, { merge: true });
       handleClose();
     };
-
+    //console.log(data); //output debug
     data.title && data.description ? upload(data) : failSubmit();
   };
 
@@ -126,6 +131,14 @@ const EditMenu = (props) => {
             onChange={(e) => setNewLabel(e.target.value)}
             fullWidth
           />
+          <div style={{ paddingTop: "20px" }}>
+            <Typography color="textSecondary" gutterBottom>
+              Date
+            </Typography>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <DateTimePicker value={newDate} onChange={setNewDate} />
+            </MuiPickersUtilsProvider>
+          </div>
           <div style={{ paddingTop: "20px" }}>
             <Typography color="textSecondary" gutterBottom>
               Color

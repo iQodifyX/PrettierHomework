@@ -18,7 +18,7 @@ const SignOut = () => {
   return (
     <div>
       <Button
-        style={{ height: "40px" }}
+        style={{ height: "40px", widht: "91.92px" }}
         onClick={() =>
           confirm({
             title: "Log Out",
@@ -29,7 +29,7 @@ const SignOut = () => {
         }
         variant="contained"
       >
-        Log Out
+        Logout
       </Button>
     </div>
   );

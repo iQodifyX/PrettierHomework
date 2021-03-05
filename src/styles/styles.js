@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   labels: {
     padding: "3px 9px 3px 9px",
-    margin: "0px 10px 10px 0px",
+    margin: "0px 0px 5px 0px",
     backgroundColor: "#ededed",
     borderRadius: "1rem",
     border: "1px solid black",

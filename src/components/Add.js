@@ -16,14 +16,17 @@ import { ColorPicker } from "material-ui-color";
 import { useConfirm } from "material-ui-confirm";
 import { firebase, firestore, auth } from "../App";
 import { useStyles } from "../styles/styles";
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const AddEvent = () => {
-  let [open, setOpen] = useState(false);
-  let [title, setTitle] = useState("");
-  let [description, setDescription] = useState("");
-  let [url, setUrl] = useState("");
-  let [color, setColor] = useState("crimson");
-  let [label, setLabel] = useState("");
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [url, setUrl] = useState("");
+  const [color, setColor] = useState("crimson");
+  const [label, setLabel] = useState("");
+  const [date, setDate] = useState(new Date());
   const confirm = useConfirm();
   const theme = useTheme();
   const classes = useStyles();
@@ -46,6 +49,7 @@ const AddEvent = () => {
     setUrl("");
     setLabel("");
     setColor("Crimson");
+    setDate(new Date());
   };
 
   const handleClose = () => {
@@ -61,14 +65,15 @@ const AddEvent = () => {
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       state: true,
       label: label,
+      date: date,
     };
-
-    //console.log(data) // output debug
 
     const upload = (data) => {
       firestore.collection("users").doc(uid).collection("events").add(data);
       setOpen(false);
     };
+
+    //console.log(data) // output debug
     data.title && data.description ? upload(data) : failSubmit();
   };
 
@@ -128,6 +133,14 @@ const AddEvent = () => {
             onChange={(e) => setLabel(e.target.value)}
             fullWidth
           />
+          <div style={{ paddingTop: "20px" }}>
+            <Typography color="textSecondary" gutterBottom>
+              Date
+            </Typography>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <DateTimePicker value={date} onChange={setDate} />
+            </MuiPickersUtilsProvider>
+          </div>
           <div style={{ paddingTop: "20px" }}>
             <Typography color="textSecondary" gutterBottom>
               Color

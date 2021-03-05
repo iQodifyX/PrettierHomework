@@ -6,6 +6,8 @@ import {
   Container,
   Grid,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@material-ui/core";
 import { useStyles } from "../styles/styles";
 import { useCollectionData } from "react-firebase-hooks/firestore";
@@ -17,13 +19,25 @@ import DoneIcon from "@material-ui/icons/Done";
 import RestoreIcon from "@material-ui/icons/Restore";
 import LinkIcon from "@material-ui/icons/Link";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
 
 const OneCard = (props) => {
   const { uid } = auth.currentUser;
   const classes = useStyles();
   const confirm = useConfirm();
-  const { title, description, url, state, id, color, label } = props.event;
+  const {
+    title,
+    description,
+    url,
+    state,
+    id,
+    color,
+    label,
+    date,
+  } = props.event;
   const done = props.done;
+  const dateObj = new Date(date);
+  const dateString = dateObj.toDateString();
 
   const updateState = () => {
     const newState = state ? false : true;
@@ -78,10 +92,29 @@ const OneCard = (props) => {
               <Typography variant="h5" component="h2" gutterBottom>
                 {title}
               </Typography>
-              <div style={{ display: "flex", margin: "0px" }}>
+              <div
+                style={{ display: "flex", margin: "0px", alignItems: "center" }}
+              >
                 {label ? (
                   <Typography variant="body2" className={classes.labels}>
                     {label}
+                  </Typography>
+                ) : undefined}
+                {String(dateString) ? (
+                  <Typography
+                    variant="caption"
+                    color="textSecondary"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      margin: "0px 0px 4px 5px",
+                    }}
+                  >
+                    <AccessTimeIcon
+                      style={{ padding: "2px", margin: "0px 3px 0px 2px" }}
+                      color="textSecondary"
+                    />
+                    {String(dateString)}
                   </Typography>
                 ) : undefined}
               </div>
@@ -117,13 +150,15 @@ const Cards = () => {
   const { uid } = auth.currentUser;
   const classes = useStyles();
   let [limit, setLimit] = useState(9);
-  let [done, setDone] = useState(false);
+  let [done, setDone] = useState(true);
+  const theme = useTheme();
+  const small = useMediaQuery(theme.breakpoints.down("xs"));
 
   const undoneQuery = firestore
     .collection("users")
     .doc(uid)
     .collection("events")
-    .orderBy("timestamp", "desc")
+    .orderBy("date", "asc")
     .limit(limit);
 
   const [undoneEvents] = useCollectionData(undoneQuery, { idField: "id" });
@@ -131,15 +166,38 @@ const Cards = () => {
   return (
     <>
       <Container className={classes.cardGrid} maxWidth="lg">
-        <Typography
-          color="textPrimary"
-          variant="h2"
-          align="center"
-          className={classes.title}
-          gutterBottom
+        <div
+          style={
+            small
+              ? {
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  width: "82vw",
+                }
+              : null
+          }
         >
-          Tasks
-        </Typography>
+          <Typography
+            color="textPrimary"
+            variant="h2"
+            align="center"
+            className={classes.title}
+          >
+            Tasks
+          </Typography>
+          <Typography
+            color="textSecondary"
+            variant="body1"
+            align="center"
+            gutterBottom
+            style={{ padding: "20px" }}
+          >
+            Add a task by clicking the "+" icon
+          </Typography>
+        </div>
+
         <Grid container spacing={4}>
           {undoneEvents &&
             undoneEvents.map((event) => (
