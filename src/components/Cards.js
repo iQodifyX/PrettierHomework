@@ -115,7 +115,6 @@ const OneCard = (props) => {
                   >
                     <AccessTimeIcon
                       style={{ padding: "2px", margin: "0px 3px 0px 2px" }}
-                      color="textSecondary"
                     />
                     {dateString}
                   </Typography>

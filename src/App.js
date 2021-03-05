@@ -8,6 +8,7 @@ import { SignIn } from "./components/Auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Main } from "./components/Main";
 import { ConfirmProvider } from "material-ui-confirm";
+import { SnackbarProvider } from "notistack";
 
 firebase.initializeApp({
   apiKey: "AIzaSyC8I4hJR1hIZi-Ec_diOQA7CRLiSRWtekk",
@@ -28,9 +29,11 @@ const App = () => {
 
   return (
     <>
-      <ConfirmProvider>
-        <section>{user ? <Main /> : <SignIn />}</section>
-      </ConfirmProvider>
+      <SnackbarProvider maxSnack={3}>
+        <ConfirmProvider>
+          <section>{user ? <Main /> : <SignIn />}</section>
+        </ConfirmProvider>
+      </SnackbarProvider>
     </>
   );
 };
