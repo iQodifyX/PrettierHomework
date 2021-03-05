@@ -36,8 +36,11 @@ const OneCard = (props) => {
     date,
   } = props.event;
   const done = props.done;
+
   const dateObj = new Date(date);
-  const dateString = dateObj.toDateString();
+  const dateString = `${String(dateObj.toDateString()).substr(0, 10)} (${String(
+    dateObj.toTimeString()
+  ).substr(0, 5)})`;
 
   const updateState = () => {
     const newState = state ? false : true;
@@ -100,7 +103,7 @@ const OneCard = (props) => {
                     {label}
                   </Typography>
                 ) : undefined}
-                {String(dateString) ? (
+                {dateString ? (
                   <Typography
                     variant="caption"
                     color="textSecondary"
@@ -114,14 +117,19 @@ const OneCard = (props) => {
                       style={{ padding: "2px", margin: "0px 3px 0px 2px" }}
                       color="textSecondary"
                     />
-                    {String(dateString)}
+                    {dateString}
                   </Typography>
                 ) : undefined}
               </div>
               <Typography>{description}</Typography>
             </CardContent>
             <CardActions>
-              <Button size="small" color="primary" onClick={updateState}>
+              <Button
+                size="small"
+                color="primary"
+                onClick={updateState}
+                aria-label={state ? "Mark as done" : "Mark as undone"}
+              >
                 {state ? <DoneIcon /> : <RestoreIcon />}
               </Button>
               <EditMenu edit={props.event} />
@@ -131,11 +139,17 @@ const OneCard = (props) => {
                   color="primary"
                   target="_blank"
                   onClick={tryUrl}
+                  aria-label="Go to url"
                 >
                   <LinkIcon />
                 </Button>
               ) : undefined}
-              <Button size="small" color="primary" onClick={tryDelete}>
+              <Button
+                size="small"
+                color="primary"
+                onClick={tryDelete}
+                aria-label="Delete"
+              >
                 <DeleteOutlineIcon />
               </Button>
             </CardActions>
@@ -149,7 +163,7 @@ const OneCard = (props) => {
 const Cards = () => {
   const { uid } = auth.currentUser;
   const classes = useStyles();
-  let [limit, setLimit] = useState(9);
+  let [limit, setLimit] = useState(10000);
   let [done, setDone] = useState(true);
   const theme = useTheme();
   const small = useMediaQuery(theme.breakpoints.down("xs"));
@@ -220,6 +234,7 @@ const Cards = () => {
             color="primary"
             onClick={() => setDone(done ? false : true)}
             className={classes.button}
+            aria-label={done ? "Show Done tasks" : "Don't show done tasks"}
           >
             {done ? <RestoreIcon /> : <DoneIcon />}
           </Button>

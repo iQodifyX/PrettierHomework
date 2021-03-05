@@ -82,7 +82,12 @@ const EditMenu = (props) => {
 
   return (
     <>
-      <Button size="small" color="primary" onClick={handleClickOpen}>
+      <Button
+        size="small"
+        color="primary"
+        onClick={handleClickOpen}
+        aria-label="Edit task"
+      >
         <EditOutlinedIcon />
       </Button>
       <Dialog

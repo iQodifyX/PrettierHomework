@@ -84,6 +84,7 @@ const AddEvent = () => {
         variant="contained"
         size="medium"
         onClick={handleClickOpen}
+        aria-label="Create a task"
         style={{ borderRadius: "50%", height: "70px", width: "70px" }}
       >
         <Add style={{ fontSize: "50px" }} />
