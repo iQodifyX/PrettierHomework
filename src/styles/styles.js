@@ -16,6 +16,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     flex: 1,
   },
+  taskDiv: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    width: "82vw",
+  },
   textLogo: {
     padding: "20px",
   },
