@@ -10,6 +10,10 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.3",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.32",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.1",
     "date-fns": "^2.18.0",
     "firebase": "^8.2.9",
     "material-ui-color": "^0.4.10",
@@ -22,6 +26,7 @@
     "react-firebase-hooks": "^2.2.0",
     "react-scripts": "4.0.3",
     "styled-components": "^5.2.1",
+    "typescript": "^4.2.3",
     "web-vitals": "^1.1.0"
   },
   "scripts": {
