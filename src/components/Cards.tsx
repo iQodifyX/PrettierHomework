@@ -15,11 +15,12 @@ import LinkIcon from "@material-ui/icons/Link";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import CancelIcon from "@material-ui/icons/Cancel";
 import UndoIcon from "@material-ui/icons/Undo";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
 
 const OneCard = (props: { event: Event }) => {
   //Destructuring
   const uid: string | undefined = auth.currentUser ? auth.currentUser.uid : undefined
-  const { state, id, url, color, title, label, description }: Event = props.event
+  const { state, id, url, color, title, label, description, date }: Event = props.event
 
   //State Hooks
   const [currentState, setCurrentState] = useState(state)
@@ -29,6 +30,10 @@ const OneCard = (props: { event: Event }) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   const classes = useStyles()
   const confirm = useConfirm()
+
+  //Date
+  const dateObject = new Date(date)
+  const dateString = `${String(dateObject.toDateString()).substr(0, 10)} (${String(dateObject.toTimeString()).substr(0, 5)})`
 
   //Undo Notification
   const showNotification = () => {
@@ -41,29 +46,32 @@ const OneCard = (props: { event: Event }) => {
 
     const msg = (
       <>
-        <Typography>
+        <Typography variant="body1" style={{margin: "5px"}}>
           {currentState ? "Marked as done" : "Marked as pending"}
         </Typography>
-        <IconButton 
-          onClick={dismiss}
-          aria-label="Dismiss notification"
-          style={{ color: "#ffffff" }}
-        >
-          <CancelIcon />
-        </IconButton>
-        <IconButton
-          onClick={() => undo(nid)}
-          aria-label="Undo"
-          style={{ color: "#ffffff" }}
-        >
-          <UndoIcon />
-        </IconButton>
+          <IconButton
+            size="small" 
+            onClick={dismiss}
+            aria-label="Dismiss notification"
+            style={{ margin: "4px", color: "#ffffff" }}
+          >
+            <CancelIcon style={{fontSize:"18px"}} />
+          </IconButton>
+          <IconButton
+            size="small" 
+            onClick={() => undo(nid)}
+            aria-label="Undo"
+            style={{ margin: "4px", color: "#ffffff" }}
+          >
+            <UndoIcon style={{fontSize:"18px"}} />
+          </IconButton>
       </>
     )
 
     enqueueSnackbar(msg, {
       variant: "default",
       key: nid,
+      autoHideDuration: 5000
     })
   }
   
@@ -139,9 +147,27 @@ const OneCard = (props: { event: Event }) => {
             <Typography variant="h5" component="h2" gutterBottom>
               {title}
             </Typography>
-            <div>
-              {label ? <Typography>{label}</Typography> : undefined}
-              {/*Add date rendering*/ }
+            <div
+              style={{ display: "flex", margin: "0px", alignItems: "center" }}
+            >
+              {label ? <Typography className={classes.labels} variant="caption">{label}</Typography> : undefined}
+              {dateString ? (
+                  <Typography
+                    variant="caption"
+                    color="textSecondary"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      margin: label ? "0px 0px 4px 5px" : "0px 0px 10px 0px",
+                    }}
+                    gutterBottom
+                  >
+                    <AccessTimeIcon
+                      style={{ padding: "2px", margin: label ? "0px 4px 1px 2px" : "0px 4px 1px 0px"  }}
+                    />
+                    {dateString}
+                  </Typography>
+                ) : undefined}
             </div>
             <Typography>{description}</Typography>
           </CardContent>

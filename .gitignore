@@ -18,6 +18,7 @@ firebase.json
 
 #typescript
 tsconfig.json
+react-app-env.d.ts
 
 # misc
 .DS_Store
