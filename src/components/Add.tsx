@@ -1,40 +1,52 @@
-import React, { useState } from "react";
 import {
   Button,
   useMediaQuery,
+  useTheme,
   Dialog,
-  DialogActions,
+  DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogTitle,
   TextField,
   Typography,
+  DialogActions,
 } from "@material-ui/core";
-import Add from "@material-ui/icons/Add";
-import { useTheme } from "@material-ui/core/styles";
-import { ColorPicker } from "material-ui-color";
-import { useConfirm } from "material-ui-confirm";
-import { firebase, firestore, auth } from "../App";
 import { useStyles } from "../styles/styles";
+import { useConfirm } from "material-ui-confirm";
+import { useState } from "react";
+import { auth, firebase, firestore } from "../App";
+import { Event } from "../typescript/interfaces";
 import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
+//icon imports
+import Add from "@material-ui/icons/Add";
+import { ColorPicker } from "material-ui-color";
+
 const AddEvent = () => {
+  //user data
+  const uid: string | undefined = auth.currentUser
+    ? auth.currentUser.uid
+    : undefined;
+
+  //default states
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [url, setUrl] = useState("");
-  const [color, setColor] = useState("crimson");
+  const [color, setColor] = useState("Crimson");
   const [label, setLabel] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate]: [number, any] = useState(new Date().getTime());
+
+  //other hooks
   const confirm = useConfirm();
-  const theme = useTheme();
   const classes = useStyles();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const { uid } = auth.currentUser;
+  const theme = useTheme();
+  const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+
+  //incomplete form
   const failSubmit = () => {
     confirm({
-      title: "You can't submit this form",
+      title: "You can´t submit this form",
       description:
         "There are incomplete fields. Check the requiered fields are complete and try again",
       confirmationButtonProps: { autoFocus: true },
@@ -42,22 +54,21 @@ const AddEvent = () => {
       .then(() => undefined)
       .catch(() => setOpen(false));
   };
-  const handleClickOpen = () => {
+
+  const handleOpen = () => {
     setOpen(true);
     setTitle("");
     setDescription("");
     setUrl("");
-    setLabel("");
     setColor("Crimson");
-    setDate(new Date());
+    setLabel("");
+    setDate(new Date().getTime());
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClose = () => setOpen(false);
 
   const submit = () => {
-    const data = {
+    const data: Event = {
       title: title,
       description: description,
       url: url,
@@ -68,12 +79,12 @@ const AddEvent = () => {
       date: date,
     };
 
-    const upload = (data) => {
+    const upload = (data: Event) => {
       firestore.collection("users").doc(uid).collection("events").add(data);
       setOpen(false);
     };
 
-    //console.log(data) // output debug
+    //console.log(data) // Output debug
     data.title && data.description ? upload(data) : failSubmit();
   };
 
@@ -83,29 +94,21 @@ const AddEvent = () => {
         color="secondary"
         variant="contained"
         size="medium"
-        onClick={handleClickOpen}
+        onClick={handleOpen}
         aria-label="Create a task"
         style={{ borderRadius: "50%", height: "70px", width: "70px" }}
       >
         <Add style={{ fontSize: "50px" }} />
       </Button>
-      <Dialog
-        fullScreen={fullScreen}
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="responsive-dialog-title"
-      >
-        <div style={{ backgroundColor: color, height: "10px" }}></div>
-        <DialogTitle id="responsive-dialog-title">
-          {"Create a task"}
-        </DialogTitle>
+      <Dialog fullScreen={isSmall} open={open} onClose={handleClose}>
+        <div style={{ backgroundColor: color, height: "10px" }} />
+        <DialogTitle>Create a task</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Enter the following information in order to create the task
+            Enter the following information in order to create a new task
           </DialogContentText>
           <TextField
             required
-            autoFocus={true}
             margin="normal"
             id="title"
             label="Title"
@@ -139,7 +142,10 @@ const AddEvent = () => {
               Date
             </Typography>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <DateTimePicker value={date} onChange={setDate} />
+              <DateTimePicker
+                value={date}
+                onChange={(e) => setDate(e?.valueOf())}
+              />
             </MuiPickersUtilsProvider>
           </div>
           <div style={{ paddingTop: "20px" }}>
@@ -154,7 +160,6 @@ const AddEvent = () => {
         </DialogContent>
         <DialogActions>
           <Button
-            autoFocus
             onClick={handleClose}
             color="primary"
             style={{ marginBottom: "20px" }}
@@ -165,7 +170,6 @@ const AddEvent = () => {
             onClick={submit}
             color="primary"
             style={{ marginBottom: "20px" }}
-            autoFocus
           >
             Submit
           </Button>
